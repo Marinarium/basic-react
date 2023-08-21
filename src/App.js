@@ -14,11 +14,15 @@ function App() {
       setPosts([...posts, newPost]);
   };
 
+  const removePost = (postId) => {
+    setPosts([...posts.filter(p => p.id !== postId)]);
+  }
+
   return (
     <div className="app">
       <h1 className="title">Реактовая Революция: <br/>строим будущее, компонент за компонентом</h1>
       <PostForm create={createPost}/>
-      <PostList posts={posts} title='Экосистема React'/>
+      <PostList posts={posts} title='Экосистема React' remove={removePost}/>
     </div>
   );
 }
