@@ -21,6 +21,7 @@
     background-color: var(--color-bg);
     color: var(--color-light);
     padding: 40px 20px 70px;
+    min-height: 100vh;
 }
 
 h1, h2, h3 {
