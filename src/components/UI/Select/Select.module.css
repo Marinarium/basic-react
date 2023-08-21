@@ -1,0 +1,23 @@
+.select {
+    padding: 10px;
+    font-size: 14px;
+    border: 2px solid var(--color-main);
+    border-radius: 2px;
+    min-width: 160px;
+    margin-bottom: 30px;
+    background-color: var(--color-transparent-main);
+    color: var(--color-main);
+    cursor: pointer;
+    user-select: none;
+}
+
+.select:focus, .select:hover {
+    outline: none;
+    border-color: var(--color-second);
+    color: var(--color-second);
+}
+
+.option {
+    padding: 10px;
+    font-size: 14px;
+}
