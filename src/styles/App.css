@@ -51,6 +51,12 @@ h3 {
     margin-bottom: 70px;
 }
 
+.post-filter {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+}
+
 .post {
     display: flex;
     padding: 30px;

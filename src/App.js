@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import PostList from './components/PostList';
 import PostForm from './components/PostForm';
+import PostFilter from './components/PostFilter';
 import './styles/App.css';
-import Select from './components/UI/Select/Select';
 
 function App() {
   const[posts, setPosts] = useState([
@@ -10,7 +10,20 @@ function App() {
     { id: 2, title: 'MobX', description: 'Современная библиотека управления состоянием для приложений на платформе JavaScript, которая упрощает управление и реактивное обновление данных.' },
     { id: 3, title: 'Redux', description: 'Популярная библиотека управления состоянием в приложениях на JavaScript, которая обеспечивает предсказуемый поток данных и упрощает управление состоянием приложения через одно хранилище.' }
   ]);
-  const [selectedValue, setSelectedValue] = useState('');
+
+  const [filter, setFilter] = useState({ selectedType: '', searchQuery: '' });
+
+  const sortedPosts = useMemo(() => {
+    if(filter.selectedType) {
+      return [...posts].sort((a, b) => a[filter.selectedType].localeCompare(b[filter.selectedType]));
+    }
+
+    return posts;
+  }, [filter.selectedType, posts]);
+
+  const sortedAndSearchedPosts = useMemo(() => {
+    return sortedPosts.filter(post => post.title.toLowerCase().includes(filter.searchQuery.toLowerCase()));
+  }, [filter.searchQuery, sortedPosts]);
 
   const createPost = (newPost) => {
       setPosts([...posts, newPost]);
@@ -20,21 +33,12 @@ function App() {
     setPosts([...posts.filter(p => p.id !== postId)]);
   };
 
-  const sortPosts = (sortType) => {
-    setSelectedValue(sortType);
-    setPosts([...posts].sort((a, b) => a[sortType].localeCompare(b[sortType])));
-  };
-
   return (
     <div className="app">
       <h1 className="title">Реактовая Революция: <br/>строим будущее, компонент за компонентом</h1>
       <PostForm create={createPost}/>
-      <Select
-        value={selectedValue}
-        onChange={sortPosts}
-        options={[{value: 'title', name: 'по названию'}, {value: 'description', name: 'по описанию'}]}
-      />
-      <PostList posts={posts} title='Экосистема React' remove={removePost}/>
+      <PostFilter filter={filter} updateFilter={setFilter}/>
+      <PostList posts={sortedAndSearchedPosts} title='Экосистема React' remove={removePost}/>
     </div>
   );
 }
