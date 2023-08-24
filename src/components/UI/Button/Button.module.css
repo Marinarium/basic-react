@@ -11,6 +11,10 @@
     transition: all ease-in-out 250ms;
 }
 
+.button--small {
+    padding: 5px 10px;
+}
+
 .button:hover {
     background-color: var(--color-second);
     border-color: var(--color-second);

@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react';
 import PostList from './components/PostList';
 import PostForm from './components/PostForm';
 import PostFilter from './components/PostFilter';
+import Modal from './components/UI/Modal/Modal';
+import Button from './components/UI/Button/Button';
 import './styles/App.css';
 
 function App() {
@@ -12,6 +14,7 @@ function App() {
   ]);
 
   const [filter, setFilter] = useState({ selectedType: '', searchQuery: '' });
+  const [modal, setModal] = useState(false);
 
   const sortedPosts = useMemo(() => {
     if(filter.selectedType) {
@@ -27,6 +30,7 @@ function App() {
 
   const createPost = (newPost) => {
       setPosts([...posts, newPost]);
+      setModal(false);
   };
 
   const removePost = (postId) => {
@@ -36,7 +40,10 @@ function App() {
   return (
     <div className="app">
       <h1 className="title">Реактовая Революция: <br/>строим будущее, компонент за компонентом</h1>
-      <PostForm create={createPost}/>
+      <Button onClick={() => setModal(!modal)} addClass={"button-add"}>Добавить запись</Button>
+      <Modal active={modal} setActive={setModal}>
+        <PostForm create={createPost}/>
+      </Modal>
       <PostFilter filter={filter} updateFilter={setFilter}/>
       <PostList posts={sortedAndSearchedPosts} title='Экосистема React' remove={removePost}/>
     </div>
