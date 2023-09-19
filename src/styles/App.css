@@ -73,3 +73,18 @@ h3 {
 .post__title {
    min-width: 20%;
 }
+
+.animated-enter {
+    transform: translateX(100vw);
+}
+.animated-enter-active {
+    transform: translateX(0);
+    transition: all 500ms ease-in;
+}
+.animated-exit {
+    transform: translateX(0);
+}
+.animated-exit-active {
+    transform: translateX(-100vw);
+    transition: all 500ms ease-in;
+}
