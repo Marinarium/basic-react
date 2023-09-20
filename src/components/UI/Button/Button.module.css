@@ -15,9 +15,13 @@
     padding: 5px 10px;
 }
 
+.button--accent {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
 .button:hover {
-    background-color: var(--color-second);
-    border-color: var(--color-second);
+    opacity: .8;
 }
 
 .button:active {
