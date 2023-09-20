@@ -8,12 +8,17 @@ import Button from './components/UI/Button/Button';
 import './styles/App.css';
 import PostService from './API/PostService';
 import Loader from './components/UI/Loader/Loader';
+import { useFetching } from './hooks/useFetching';
 
 function App() {
   const[posts, setPosts] = useState([]);
   const [filter, setFilter] = useState({ selectedType: '', searchQuery: '' });
   const [modal, setModal] = useState(false);
-  const [isPostLoading, setIsPostLoading] = useState(false);
+
+  const [fetchPosts, isPostLoading, postError] = useFetching(async() => {
+    const response = await PostService.getAll();
+    setPosts(response.data);
+  })
 
   const sortedAndSearchedPosts = usePosts(posts, filter.selectedType, filter.searchQuery);
 
@@ -25,13 +30,6 @@ function App() {
       setPosts([...posts, newPost]);
       setModal(false);
   };
-
-  async function fetchPosts() {
-    setIsPostLoading(true);
-    const posts = await PostService.getAll();
-    setPosts(posts);
-    setIsPostLoading(false);
-  }
 
   const removePost = (postId) => {
     setPosts([...posts.filter(p => p.id !== postId)]);
@@ -45,6 +43,7 @@ function App() {
         <PostForm create={createPost}/>
       </Modal>
       <PostFilter filter={filter} updateFilter={setFilter}/>
+      {postError && <p>Произошла ошибка ${postError}</p>}
       {isPostLoading
         ? <Loader />
         : <PostList posts={sortedAndSearchedPosts} title='Экосистема React' remove={removePost}/>
