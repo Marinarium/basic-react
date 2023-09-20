@@ -9,7 +9,8 @@ import './styles/App.css';
 import PostService from './API/PostService';
 import Loader from './components/UI/Loader/Loader';
 import { useFetching } from './hooks/useFetching';
-import { getPageCount, getPagesArray } from './utils/pages';
+import { getPageCount } from './utils/pages';
+import Pagination from './components/UI/Pagination/Pagination';
 
 function App() {
   const[posts, setPosts] = useState([]);
@@ -27,8 +28,6 @@ function App() {
   })
 
   const sortedAndSearchedPosts = usePosts(posts, filter.selectedType, filter.searchQuery);
-
-  let pagesArray = getPagesArray(pageCount);
 
   useEffect(() => {
     fetchPosts();
@@ -60,9 +59,7 @@ function App() {
         ? <Loader />
         : <PostList posts={sortedAndSearchedPosts} title='Экосистема React' remove={removePost}/>
       }
-      <div className="pagination">{pagesArray.map(p =>
-        <Button key={p} accent={p === page} onClick={() => changePage(p)} small>{p}</Button>
-      )}</div>
+      <Pagination total={pageCount} currentPage={page} changePage={changePage}/>
     </div>
   );
 }
