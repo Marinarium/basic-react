@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePosts } from './hooks/usePosts';
 import PostList from './components/PostList';
 import PostForm from './components/PostForm';
@@ -10,11 +10,14 @@ import axios from 'axios';
 
 function App() {
   const[posts, setPosts] = useState([]);
-
   const [filter, setFilter] = useState({ selectedType: '', searchQuery: '' });
   const [modal, setModal] = useState(false);
 
   const sortedAndSearchedPosts = usePosts(posts, filter.selectedType, filter.searchQuery);
+
+  useEffect(() => {
+    fetchPosts();
+  }, [])
 
   const createPost = (newPost) => {
       setPosts([...posts, newPost]);
@@ -34,7 +37,6 @@ function App() {
   return (
     <div className="app">
       <h1 className="title">Реактовая Революция: <br/>строим будущее, компонент за компонентом</h1>
-      <Button onClick={fetchPosts}>DATA</Button>
       <Button onClick={() => setModal(!modal)} addClass={"button-add"}>Добавить запись</Button>
       <Modal active={modal} setActive={setModal}>
         <PostForm create={createPost}/>
