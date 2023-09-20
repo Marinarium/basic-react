@@ -71,7 +71,8 @@ h3 {
 }
 
 .post__title {
-   min-width: 20%;
+    min-width: 20%;
+    flex-basis: 20%;
 }
 
 .animated-enter {

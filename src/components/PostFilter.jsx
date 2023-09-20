@@ -8,7 +8,7 @@ const PostFilter = ({ filter, updateFilter }) => {
       <Select
         value={filter.selectedType}
         onChange={selectedValue => updateFilter({ ...filter, selectedType: selectedValue })}
-        options={[{value: 'title', name: 'по названию'}, {value: 'description', name: 'по описанию'}]}
+        options={[{value: 'title', name: 'по названию'}, {value: 'body', name: 'по описанию'}]}
       />
       <Input
         value={filter.searchQuery}

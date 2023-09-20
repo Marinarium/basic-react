@@ -5,7 +5,7 @@ const PostItem = ({post, id, remove}) => {
   return (
     <div className="post">
       <h3 className="post__title">{id}. {post.title}</h3>
-      <p className="post__desc">{post.description}</p>
+      <p className="post__desc">{post.body}</p>
       <div className="post__controls">
         <Button onClick={() => {remove(post.id)}}>Удалить</Button>
       </div>
