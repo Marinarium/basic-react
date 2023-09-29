@@ -1,0 +1,11 @@
+.navigation {
+    padding: 20px 40px;
+    background-color: var(--color-main);
+    width: 100%;
+}
+
+.list {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}

@@ -1,66 +1,22 @@
-import { useEffect, useState } from 'react';
-import { usePosts } from './hooks/usePosts';
-import PostList from './components/PostList';
-import PostForm from './components/PostForm';
-import PostFilter from './components/PostFilter';
-import Modal from './components/UI/Modal/Modal';
-import Button from './components/UI/Button/Button';
+import React from 'react';
 import './styles/App.css';
-import PostService from './API/PostService';
-import Loader from './components/UI/Loader/Loader';
-import { useFetching } from './hooks/useFetching';
-import { getPageCount } from './utils/pages';
-import Pagination from './components/UI/Pagination/Pagination';
+import { Route, Routes } from 'react-router-dom';
+import About from './pages/About';
+import Posts from './pages/Posts';
+import Layout from './components/Layout';
+import Home from './pages/Home';
+import Page404 from './pages/Page404';
 
-function App() {
-  const[posts, setPosts] = useState([]);
-  const [filter, setFilter] = useState({ selectedType: '', searchQuery: '' });
-  const [modal, setModal] = useState(false);
-  const [pageCount, setPageCount] = useState(0);
-  const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(1);
-
-  const [fetchPosts, isPostLoading, postError] = useFetching(async() => {
-    const response = await PostService.getAll(limit, page);
-    setPosts(response.data);
-    const totalPosts = response.headers['x-total-count'];
-    setPageCount(getPageCount(totalPosts, limit));
-  })
-
-  const sortedAndSearchedPosts = usePosts(posts, filter.selectedType, filter.searchQuery);
-
-  useEffect(() => {
-    fetchPosts();
-  }, [page])
-
-  const createPost = (newPost) => {
-      setPosts([...posts, newPost]);
-      setModal(false);
-  };
-
-  const removePost = (postId) => {
-    setPosts([...posts.filter(p => p.id !== postId)]);
-  };
-  
-  const changePage = (page) => {
-    setPage(page);
-  }
-
+function App () {
   return (
-    <div className="app">
-      <h1 className="title">Реактовая Революция: <br/>строим будущее, компонент за компонентом</h1>
-      <Button onClick={() => setModal(!modal)} addClass={"button-add"}>Добавить запись</Button>
-      <Modal active={modal} setActive={setModal}>
-        <PostForm create={createPost}/>
-      </Modal>
-      <PostFilter filter={filter} updateFilter={setFilter}/>
-      {postError && <p>Произошла ошибка ${postError}</p>}
-      {isPostLoading
-        ? <Loader />
-        : <PostList posts={sortedAndSearchedPosts} title='Экосистема React' remove={removePost}/>
-      }
-      <Pagination total={pageCount} currentPage={page} changePage={changePage}/>
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout/>}>
+        <Route index element={<Home/>}/>
+        <Route path="/about" element={<About/>}/>
+        <Route path="/posts" element={<Posts/>}/>
+        <Route path="*" element={<Page404/>}/>
+      </Route>
+    </Routes>
   );
 }
 

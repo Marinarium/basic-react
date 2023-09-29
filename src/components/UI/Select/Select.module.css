@@ -4,7 +4,6 @@
     border: 2px solid var(--color-main);
     border-radius: 2px;
     min-width: 160px;
-    margin-bottom: 20px;
     background-color: var(--color-transparent-main);
     color: var(--color-main);
     cursor: pointer;
