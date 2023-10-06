@@ -6,6 +6,7 @@ import Posts from './pages/Posts';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Page404 from './pages/Page404';
+import Post from './pages/Post';
 
 function App () {
   return (
@@ -14,6 +15,7 @@ function App () {
         <Route index element={<Home/>}/>
         <Route path="/about" element={<About/>}/>
         <Route path="/posts" element={<Posts/>}/>
+        <Route exact path="/posts/:id" element={<Post/>}/>
         <Route path="*" element={<Page404/>}/>
       </Route>
     </Routes>

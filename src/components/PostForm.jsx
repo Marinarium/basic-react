@@ -25,6 +25,7 @@ const PostForm = ({ create }) => {
              id="description"
              label="Описание"
              type="text"/>
+      <br/>
       <Button type="button" onClick={addPost}>Добавить!</Button>
     </form>
   );

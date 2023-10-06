@@ -20,6 +20,12 @@
     border-color: var(--color-accent);
 }
 
+.button--danger {
+    background-color: var(--color-danger);
+    border-color: var(--color-danger);
+    color: var(--color-light);
+}
+
 .button:hover {
     opacity: .8;
 }
